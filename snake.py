@@ -1,10 +1,19 @@
 import turtle
 import time
 import random
-from PIL import Image
+import pygame
+
+pygame.init()
+
+
+# tiene que comer para poder escucharse el sonido 
 
 posponer = 0.1
 
+#importando sonido
+
+sonidoLosser = pygame.mixer.Sound("over.mp3")
+sonidoComida = pygame.mixer.Sound('comiendo.mp3')
 
 
 #Marcador
@@ -17,12 +26,6 @@ wn.title("Juego Snake V1.9")
 wn.bgcolor("black")  #averiguar cambiar color por uan foto 
 wn.setup(width = 600, height = 600)
 wn.tracer(0)
-imagen_mosca = "mosca.png"
-wn.addshape(imagen_mosca)
-
-#registrando la foto
-
-wn.register_shape("mosca",imagen_mosca)
 
 #Cabeza serpiente
 cabeza = turtle.Turtle()
@@ -36,10 +39,11 @@ cabeza.direction = "stop"
 #Comida
 comida = turtle.Turtle()
 comida.speed(0)
-comida.shape("mosca")
+comida.shape("circle")
 comida.color("red")
 comida.penup()
 comida.goto(0,100)
+
 
 #Segmentos
 segmentos = []
@@ -95,14 +99,15 @@ while True:
         time.sleep(1)
         cabeza.goto(0,0)
         cabeza.direction = "stop"
-
+        sonidoLosser.play() 
         #Esconder los segmentos
         for segmento in segmentos:
             segmento.goto(1000,1000)
-
+            
         #Limpiar lista de segmentos
+            sonidoLosser.play()
             segmento.clear()
-
+            
         #Resetear marcador
         puntuacion = 0
         texto.clear()   
@@ -121,7 +126,7 @@ while True:
         nuevo_segmento.color("OliveDrab")
         nuevo_segmento.penup()
         segmentos.append(nuevo_segmento)
-
+        sonidoComida.play()
         #Aumentar marcador 
         puntuacion += 1
          
@@ -152,16 +157,16 @@ while True:
             time.sleep
             cabeza.goto(0,0)
             cabeza.direction = "stop"
-
+            
             #Esconder los segmentos
             for segmento in segmentos:
                 segmento.goto(1000,1000)
-
+            sonidoLosser.play()   
             segmentos.clear()
-
+            
             puntuacion = 0
             texto.clear()   
-            texto.write("marcador: {}    record: {}".format(score, high_score), 
+            texto.write("marcador: {}    record: {}".format(puntuacion, MaxPuntuacion), 
                 align = "center", font =("Courier", 24, "normal"))
-        
+            
     time.sleep(posponer)
