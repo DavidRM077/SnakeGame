@@ -2,11 +2,16 @@ import turtle
 import time
 import random
 import pygame
+from PIL import Image
+
+
+
 
 pygame.init()
 
 
-# tiene que comer para poder escucharse el sonido 
+
+
 
 posponer = 0.1
 
@@ -27,6 +32,7 @@ wn.bgcolor("black")  #averiguar cambiar color por uan foto
 wn.setup(width = 600, height = 600)
 wn.tracer(0)
 
+
 #Cabeza serpiente
 cabeza = turtle.Turtle()
 cabeza.speed(0)
@@ -39,7 +45,7 @@ cabeza.direction = "stop"
 #Comida
 comida = turtle.Turtle()
 comida.speed(0)
-comida.shape("circle")
+comida.shape("square")
 comida.color("red")
 comida.penup()
 comida.goto(0,100)
@@ -51,11 +57,11 @@ segmentos = []
 #Texto
 texto = turtle.Turtle()
 texto.speed(0)
-texto.color("white")
+texto.color("red")
 texto.penup()
 texto.hideturtle()
 texto.goto(0,260)
-texto.write("marcador: 0     record: 0", align = "center", font =("Courier", 24, "normal"))
+texto.write("marcador: 0     record: 0",  align = "center", font =("Courier", 24, "normal"))
 
 #Funciones
 def arriba():
@@ -90,7 +96,9 @@ wn.onkeypress(arriba, "Up")
 wn.onkeypress(abajo, "Down")
 wn.onkeypress(izquierda, "Left")
 wn.onkeypress(derecha, "Right")
-    
+
+
+
 while True:
     wn.update()
 
@@ -100,12 +108,14 @@ while True:
         cabeza.goto(0,0)
         cabeza.direction = "stop"
         sonidoLosser.play() 
+        
         #Esconder los segmentos
         for segmento in segmentos:
             segmento.goto(1000,1000)
             
         #Limpiar lista de segmentos
             sonidoLosser.play()
+
             segmento.clear()
             
         #Resetear marcador
